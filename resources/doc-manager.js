@@ -26,10 +26,7 @@ appModule.controller('DocManagerController',
 	function ($scope, $sce, $modal, APP_CONFIG, bonitaConfig, bonitaAuthentication) {
 	
 		// Ensure we have a valid Bonita session
-		bonitaAuthentication.checkForActiveSession().then(function(session){
-			// Broadcast refresh signal to all dashboard panes
-			$scope.$broadcast('refresh_list');
-        });
+		bonitaAuthentication.checkForActiveSession();
 		
         $scope.getDate = function(dateString) {
 			return dateString.substring(0, dateString.lastIndexOf('.'));
@@ -42,8 +39,8 @@ appModule.controller('DocManagerController',
 
 // Document list controller
 appModule.controller('DocListController', 
-	['APP_CONFIG', '$scope', '$sce', '$filter', '$modal', 'CaseDocument', 
-	function (APP_CONFIG, $scope, $sce, $filter, $modal, CaseDocument) {
+	['APP_CONFIG', '$scope', '$sce', '$filter', '$modal', 'bonitaAuthentication', 'CaseDocument', 
+	function (APP_CONFIG, $scope, $sce, $filter, $modal, bonitaAuthentication, CaseDocument) {
 	
 	$scope.docTypeFilter = 'all';
 	
@@ -116,10 +113,14 @@ appModule.controller('DocListController',
 		});
 	};
 	
-	// Global refresh signal listener - Used to init data
-	$scope.$on('refresh_list', function(event) {
-		controller.updateView(true);
-	});
+	// Init data when we acquire user session
+	$scope.$watch(
+		function () { return bonitaAuthentication.isLogged; },
+		function (newValue, oldValue) {
+			if (newValue === true)
+				controller.updateView(true);
+		}
+	);
 	
 	$scope.getIndexLabel = function(index) {
 		return index == '-1' ? 'n/a' : index;
@@ -184,8 +185,8 @@ appModule.controller('DocListController',
 
 // Archived document list controller
 appModule.controller('ArchivedDocListController', 
-	['APP_CONFIG', '$scope', '$sce', '$filter', '$modal', 'ArchivedCaseDocument', 
-	function (APP_CONFIG, $scope, $sce, $filter, $modal, ArchivedCaseDocument) {
+	['APP_CONFIG', '$scope', '$sce', '$filter', '$modal', 'bonitaAuthentication', 'ArchivedCaseDocument', 
+	function (APP_CONFIG, $scope, $sce, $filter, $modal, bonitaAuthentication, ArchivedCaseDocument) {
 	
 	$scope.docTypeFilter = 'all';
 	
@@ -259,10 +260,14 @@ appModule.controller('ArchivedDocListController',
 		});
 	};
 	
-	// Global refresh signal listener - Used to init data
-	$scope.$on('refresh_list', function(event) {
-		controller.updateView(true);
-	});
+	// Init data when we acquire user session
+	$scope.$watch(
+		function () { return bonitaAuthentication.isLogged; },
+		function (newValue, oldValue) {
+			if (newValue === true)
+				controller.updateView(true);
+		}
+	);
 	
 	$scope.getIndexLabel = function(index) {
 		return index == '-1' ? 'n/a' : index;

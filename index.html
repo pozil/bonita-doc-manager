@@ -9,31 +9,22 @@
 	<!-- Bootstrap CSS -->
     <link href="pageResource?page=custompage_docmanager&location=3rd-party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="pageResource?page=custompage_docmanager&location=3rd-party/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-	
-	<!-- Third party dependencies -->
-	<script src="pageResource?page=custompage_docmanager&location=3rd-party/jquery.min.js"></script>
-	<script src="pageResource?page=custompage_docmanager&location=3rd-party/angular.min.js"></script>
-	<script src="pageResource?page=custompage_docmanager&location=3rd-party/angular-resource.min.js"></script>
-	<script src="pageResource?page=custompage_docmanager&location=3rd-party/ngBonita.min.js"></script>
-	<script src="pageResource?page=custompage_docmanager&location=3rd-party/ui-bootstrap-tpls.min.js"></script>
-
-	<!-- Application dependencies -->
-	<script src="pageResource?page=custompage_docmanager&location=doc-manager.js"></script>
+	<!-- Application CSS -->
 	<link href="pageResource?page=custompage_docmanager&location=doc-manager.css" rel="stylesheet">
 </head>
 <body ng-app="docManager">
 
 <div class="container-fluid" ng-controller="DocManagerController">
 	<tabset>
-		<tab>
+		<tab ng-controller="DocListController as listCtrl">
 			<tab-heading>
-				<span class="glyphicon glyphicon-folder-open"></span> Documents from Active Cases
+				<span class="glyphicon glyphicon-folder-open"></span> Documents from Active Cases <span class="badge">{{listCtrl.list.totalCount}}</span>
 			</tab-heading>
 			<doc-list></doc-list>
 		</tab>
-		<tab>
+		<tab ng-controller="ArchivedDocListController as listCtrl">
 			<tab-heading>
-				<span class="glyphicon glyphicon-folder-close"></span> Documents from Archived Cases
+				<span class="glyphicon glyphicon-folder-close"></span> Documents from Archived Cases <span class="badge">{{listCtrl.list.totalCount}}</span>
 			</tab-heading>
 			<archived-doc-list></archived-doc-list>
 		</tab>
@@ -41,7 +32,14 @@
 </div>
 
 
-
+<!-- Third party dependencies -->
+<script src="pageResource?page=custompage_docmanager&location=3rd-party/jquery.min.js"></script>
+<script src="pageResource?page=custompage_docmanager&location=3rd-party/angular.min.js"></script>
+<script src="pageResource?page=custompage_docmanager&location=3rd-party/angular-resource.min.js"></script>
+<script src="pageResource?page=custompage_docmanager&location=3rd-party/ngBonita.min.js"></script>
+<script src="pageResource?page=custompage_docmanager&location=3rd-party/ui-bootstrap-tpls.min.js"></script>
+<!-- Application dependencies -->
+<script src="pageResource?page=custompage_docmanager&location=doc-manager.js"></script>
 
 </body>
 </html>
