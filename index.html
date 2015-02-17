@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bonita Document Manager</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Bootstrap CSS -->
+    <link href="pageResource?page=custompage_docmanager&location=3rd-party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="pageResource?page=custompage_docmanager&location=3rd-party/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+	
+	<!-- Third party dependencies -->
+	<script src="pageResource?page=custompage_docmanager&location=3rd-party/jquery.min.js"></script>
+	<script src="pageResource?page=custompage_docmanager&location=3rd-party/angular.min.js"></script>
+	<script src="pageResource?page=custompage_docmanager&location=3rd-party/angular-resource.min.js"></script>
+	<script src="pageResource?page=custompage_docmanager&location=3rd-party/ngBonita.min.js"></script>
+	<script src="pageResource?page=custompage_docmanager&location=3rd-party/ui-bootstrap-tpls.min.js"></script>
+
+	<!-- Application dependencies -->
+	<script src="pageResource?page=custompage_docmanager&location=doc-manager.js"></script>
+	<link href="pageResource?page=custompage_docmanager&location=doc-manager.css" rel="stylesheet">
+</head>
+<body ng-app="docManager">
+
+<div class="container-fluid" ng-controller="DocManagerController">
+	<tabset>
+		<tab>
+			<tab-heading>
+				<span class="glyphicon glyphicon-folder-open"></span> Documents from Active Cases
+			</tab-heading>
+			<doc-list></doc-list>
+		</tab>
+		<tab>
+			<tab-heading>
+				<span class="glyphicon glyphicon-folder-close"></span> Documents from Archived Cases
+			</tab-heading>
+			<archived-doc-list></archived-doc-list>
+		</tab>
+	</tabset>
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<div class="bs-component bs-doc-pane" ng-controller="ArchivedDocListController as listCtrl">
+	<div class="panel panel-primary">
+		<div class="panel-body">
+			<a class="btn btn-primary btn-xs panel-top-right-button" ng-click="listCtrl.updateView(true)" title="Refresh"><span class="glyphicon glyphicon-refresh"></span></a>
+			
+			<div ng-show="listCtrl.list.totalCount > 0 || listCtrl.filterText != ''" class="sortable">
+				<div class="row">
+					<div ng-show="listCtrl.isFilterDisplayed()" class="col-lg-3 filter">
+						<div class="input-group">
+							<span class="input-group-addon glyphicon glyphicon-search"></span>
+							<input ng-model="filterText" type="text" class="form-control" placeholder="Filter"/>
+						</div>
+					</div>
+					<div class="col-lg-3 show-doc-type">
+						<div class="form-inline">
+							<label for="docTypeFilter" class="control-label">Show:</label>
+							<select ng-model="docTypeFilter" id="docTypeFilter" class="form-control">
+								<option value="all">All</option>
+								<option value="single">Single documents</option>
+								<option value="list">Document lists</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<table>
+					<thead>
+					<tr>
+						<th ng-repeat="header in listCtrl.tableHeaders" 
+							ng-class="listCtrl.getHeaderClass(header)" 
+							ng-click="listCtrl.orderBy(header)" 
+							ng-bind-html="header.label"></th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="doc in listCtrl.getFilteredAndSortedList()">
+						<td ng-class="listCtrl.getCellClass('id')">{{doc.id}}</td>
+						<td ng-class="listCtrl.getCellClass('caseId')">{{doc.caseId}}</td>
+						<td ng-class="listCtrl.getCellClass('creationDate')">{{getDate(doc.creationDate)}}</td>
+						<td ng-class="listCtrl.getCellClass('submittedBy')">{{doc.submittedByUserLabel}}</td>
+						<td ng-class="listCtrl.getCellClass('archivedDate')">{{getDate(doc.archivedDate)}}</td>
+						<td ng-class="listCtrl.getCellClass('name')">{{doc.name}}</td>
+						<td ng-class="listCtrl.getCellClass('version')">{{doc.version}}</td>
+						<td ng-class="listCtrl.getCellClass('type')">{{getTypeLabel(doc)}}</td>
+						<td ng-class="listCtrl.getCellClass('index')">{{getIndexLabel(doc.index)}}</td>
+						<td ng-class="listCtrl.getCellClass('fileName')">{{doc.fileName}}</td>
+						<td ng-class="listCtrl.getCellClass('download')"
+							><a class="btn btn-info btn-xs" href="{{getDocDownloadLink(doc)}}" title="Download" ng-disabled="!isDocDownloadable(doc)"
+							><span class="glyphicon glyphicon-download"></span></a></td>
+						<td ng-class="listCtrl.getCellClass('delete')"
+							><a class="btn btn-info btn-xs" ng-click="openDeleteModal(doc)" title="Delete"
+							><span class="glyphicon glyphicon-remove"></span></a></td>
+					</tr>
+					</tbody>
+				</table>
+				<pagination-container></pagination-container>
+			</div>
+			<h4 ng-show="listCtrl.list.totalCount == 0 && listCtrl.filterText == ''">No documents in archived cases for the moment.</h4>
+		</div>
+	</div>
+</div>
